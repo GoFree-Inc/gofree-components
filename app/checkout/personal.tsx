@@ -1,17 +1,23 @@
 import { ScrollView } from "react-native";
 import { useRouter } from "expo-router";
-import { Button, Card, useTheme } from "react-native-paper";
+import { useState } from "react";
+import { Card, useTheme } from "react-native-paper";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PersonalInfoSchema, PersonalInfo } from "../../src/schema/checkout.schema";
-import ControlledInput from "../../src/components/ControlledInput";
+import ControlledInput from "../../src/components/Forms/ControlledInput";
 import { useCheckoutContext } from "../../src/context/CheckoutContext";
+import ButtonLargePrimary from "../../src/components/Buttons/ButtonLargePrimary";
+import SearchBarPrimary from "../../src/components/SearchBar/SearchBarPrimary";
 
 export default function PersonalDetails() {
     const { control, handleSubmit } = useForm<PersonalInfo>({
         resolver: zodResolver(PersonalInfoSchema)
     });
     const { setPersonal } = useCheckoutContext();
+    const [searchQuery, setSearchQuery] = useState<string>('');
+
+    const onChangeSearch = query => setSearchQuery(query);
 
     const router = useRouter();
     const theme = useTheme();
@@ -29,6 +35,10 @@ export default function PersonalDetails() {
             <Card style={{ backgroundColor: theme.colors.background }}>
                 <Card.Title title="Personal infomation" titleVariant="titleLarge" />
                 <Card.Content style={{ gap: 10 }}>
+                    <SearchBarPrimary 
+                        onChangeText={onChangeSearch}
+                        value={searchQuery}                    
+                    />
                     <ControlledInput
                         control={control} 
                         name="name"
@@ -59,9 +69,7 @@ export default function PersonalDetails() {
                 </Card.Content>
             </Card>
 
-            <Button onPress={handleSubmit(nextPage)} mode="contained">
-                Next
-            </Button>
+            <ButtonLargePrimary onPress={handleSubmit(nextPage)} children={"Next"} />
         </ScrollView>
     )
 }
