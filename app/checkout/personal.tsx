@@ -10,6 +10,10 @@ import { useCheckoutContext } from "../../src/context/CheckoutContext";
 import ButtonLargePrimary from "../../src/components/Buttons/ButtonLargePrimary";
 import SearchBarPrimary from "../../src/components/SearchBar/SearchBarPrimary";
 import Contact from "../../src/components/Contact/Contact";
+import ButtonSmallPrimary from "../../src/components/Buttons/ButtonSmallPrimary";
+import DoubleButtonModal from "../../src/components/Modal/DoubleButtonModal";
+import SingleButtonModal from "../../src/components/Modal/SingleButtonModal";
+import IconModal from "../../src/components/Modal/IconModal";
 
 export default function PersonalDetails() {
     const { control, handleSubmit } = useForm<PersonalInfo>({
@@ -17,6 +21,10 @@ export default function PersonalDetails() {
     });
     const { setPersonal } = useCheckoutContext();
     const [searchQuery, setSearchQuery] = useState<string>('');
+    const [visible, setVisible] = useState<boolean>(false);
+
+    const showModal = () => setVisible(true);
+    const hideModal = () => setVisible(false);
 
     const onChangeSearch = query => setSearchQuery(query);
 
@@ -27,6 +35,10 @@ export default function PersonalDetails() {
         setPersonal(data);
 
         router.push("/checkout/delivery");
+    }
+
+    const onSubmit = () => {
+
     }
     return (
         <ScrollView 
@@ -75,7 +87,31 @@ export default function PersonalDetails() {
                 </Card.Content>
             </Card>
 
+            {/* <DoubleButtonModal 
+                visible={visible}
+                onDismiss={hideModal}
+                children={"Are you sure you want to freeze this card?"}
+                onSubmit={onSubmit}
+            /> */}
+
+            {/* <SingleButtonModal 
+                visible={visible}
+                onDismiss={hideModal}
+                children={"Pop up success message"}
+                buttonText="Done"
+                onSubmit={onSubmit}
+            /> */}
+
+            <IconModal
+                visible={visible}
+                onDismiss={hideModal}
+                children={"You’ve successfully withdrawn $50 to \n                   your USD wallet"}
+                buttonText="Done"
+                onSubmit={onSubmit}
+            />
+
             <ButtonLargePrimary onPress={handleSubmit(nextPage)} children={"Next"} />
+            <ButtonSmallPrimary onPress={showModal} children={"show modal"} />
         </ScrollView>
     )
 }

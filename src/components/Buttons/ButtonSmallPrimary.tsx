@@ -3,10 +3,11 @@ import React from 'react'
 import { Button } from 'react-native-paper';
 
 type ButtonProps = {
+    width?: number;
     onPress: (e: GestureResponderEvent) => void;
 } & React.ComponentProps<typeof Button>;
 
-export default function ButtonSmallPrimary({ onPress, children, ...buttonProps }: ButtonProps) {
+export default function ButtonSmallPrimary({ onPress, children, width, ...buttonProps }: ButtonProps) {
   return (
     <Button 
         {...buttonProps}
@@ -14,7 +15,7 @@ export default function ButtonSmallPrimary({ onPress, children, ...buttonProps }
         style={{
             borderRadius: 24,
             height: 48,
-            width: 180,
+            width: width ? width : 180,
             justifyContent: "center",
             alignSelf: "center"
         }}
