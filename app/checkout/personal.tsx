@@ -9,6 +9,7 @@ import ControlledInput from "../../src/components/Forms/ControlledInput";
 import { useCheckoutContext } from "../../src/context/CheckoutContext";
 import ButtonLargePrimary from "../../src/components/Buttons/ButtonLargePrimary";
 import SearchBarPrimary from "../../src/components/SearchBar/SearchBarPrimary";
+import Contact from "../../src/components/Contact/Contact";
 
 export default function PersonalDetails() {
     const { control, handleSubmit } = useForm<PersonalInfo>({
@@ -65,6 +66,11 @@ export default function PersonalDetails() {
                         name="confirmPassword"
                         label="Confirm Password"
                         // secureTextEntry
+                    />
+
+                    <Contact 
+                        title="Contact name"
+                        subTitle="Details"
                     />
                 </Card.Content>
             </Card>
